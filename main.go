@@ -46,6 +46,10 @@ func main() {
 	signal.Notify(killChan, os.Kill, os.Interrupt)
 	for {
 		select {
+		case <-logSender.StopChan:
+			log.Println("Shutdown the loggregator agent.")
+			logListener.Stop()
+			os.Exit(0)
 		case <-killChan:
 			log.Println("Shutdown the loggregator agent.")
 			logListener.Stop()
