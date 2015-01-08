@@ -25,7 +25,7 @@ type LogSender struct {
 
 func NewLogSender(appId, targetAddress, sharedSecret string, index uint64,
 	logListener *listener.LogListener) (lsender *LogSender, err error) {
-	lsender = &LogSender{appId, index, targetAddress, sharedSecret, logListener, nil, make(chan bool)}
+	lsender = &LogSender{appId, index, targetAddress, sharedSecret, logListener, nil, make(chan bool, 1)}
 	lsender.emitter, err = NewSignedEventEmitter(targetAddress, origin_prefix+"/"+appId+"/"+strconv.FormatUint(index, 10), sharedSecret)
 	// initialize the dropsonde with emitter
 	dropsonde.InitializeWithEmitter(lsender.emitter)

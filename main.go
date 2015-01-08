@@ -47,13 +47,13 @@ func main() {
 	for {
 		select {
 		case <-logSender.StopChan:
-			log.Println("Shutdown the loggregator agent.")
+			log.Println("Shutdown the loggregator agent as the application is stopped.")
 			logListener.Stop()
 			os.Exit(0)
 		case <-killChan:
 			log.Println("Shutdown the loggregator agent.")
-			logListener.Stop()
 			logSender.Stop()
+			logListener.Stop()
 			os.Exit(0)
 		}
 	}
